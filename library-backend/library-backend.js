@@ -24,21 +24,23 @@ const User = require("./models/user");
 const typeDefs = require("./schema");
 const resolvers = require("./resolvers");
 
-require("dotenv").config();
+// require("dotenv").config();
 
-const MONGODB_URI = process.env.MONGODB_URI;
-const SECRET = process.env.SECRET;
+// const MONGODB_URI = process.env.MONGODB_URI;
+
+const { MONGODB_URI, SECRET } = require("./util/config");
 
 console.log("connecting to", MONGODB_URI);
 
-mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    console.log("connected to MongoDB");
-  })
-  .catch((error) => {
-    console.log("error connecting to MongoDB:", error.message);
-  });
+if (MONGODB_URI && !mongoose.connection.readyState)
+  mongoose
+    .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+      console.log("connected to MongoDB");
+    })
+    .catch((error) => {
+      console.log("error connecting to MongoDB:", error.message);
+    });
 
 // let authors = [
 //   {
@@ -166,6 +168,22 @@ const start = async () => {
 
   await server.start();
 
+  function normalizePort(val) {
+    var port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+      // named pipe
+      return val;
+    }
+
+    if (port >= 0) {
+      // port number
+      return port;
+    }
+
+    return false;
+  }
+
   app.use(
     "/",
     cors(),
@@ -182,10 +200,10 @@ const start = async () => {
     }),
   );
 
-  const PORT = 4000;
+  const PORT = normalizePort(process.env.PORT || "4000");
 
   httpServer.listen(PORT, () => {
-    console.log(`Server ready at http://localhost:${PORT}`);
+    console.log(`Server ready at port ${PORT}`);
   });
 };
 

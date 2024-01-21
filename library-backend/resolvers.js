@@ -5,8 +5,9 @@ const pubsub = new PubSub();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-require("dotenv").config();
-const SECRET = process.env.SECRET;
+// require("dotenv").config();
+const { SECRET } = require("./util/config");
+// const SECRET = process.env.SECRET;
 
 const Book = require("./models/book");
 const Author = require("./models/author");
