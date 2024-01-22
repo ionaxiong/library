@@ -8,7 +8,7 @@ COPY . .
 RUN npm install
 
 # ENV REACT_APP_BACKEND_URL=http://localhost:8000
-ENV REACT_APP_SERVER_URI=/api
+# ENV REACT_APP_SERVER_URI=/api
 # ENV REACT_APP_SERVER_WS_URI=/api
 
 # ENV REACT_APP_SERVER_WS_URI=ws://localhost:4000
