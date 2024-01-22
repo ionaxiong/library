@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { useQuery, useLazyQuery } from "@apollo/client";
-import { BOOKS_BY_GENRE, ADD_BOOK } from "../queries";
+import { useLazyQuery } from "@apollo/client";
+import { BOOKS_BY_GENRE } from "../queries";
 
 const BookFilter = (props) => {
   const { setGenre, genre } = props;

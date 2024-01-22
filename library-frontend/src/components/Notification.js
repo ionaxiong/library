@@ -10,7 +10,7 @@ const Notification = (props) => {
         props.setErrorMessage(null);
       }, 10000);
     }
-  }, [messages]);
+  }, [messages, props]);
 
   console.log("messages", messages);
 

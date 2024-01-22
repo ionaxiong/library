@@ -66,7 +66,7 @@ export const AuthProvider = (props) => {
     }
 
     setLoading(false);
-  }, []);
+  }, [getMe]);
 
   const [login] = useMutation(LOGIN, {
     onError: (error) => {
@@ -121,4 +121,5 @@ export const AuthProvider = (props) => {
   );
 };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default { AuthContext, AuthProvider };

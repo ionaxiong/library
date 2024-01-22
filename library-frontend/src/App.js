@@ -10,7 +10,7 @@ import ProtectedAuth from "./components/ProtectedAuth";
 import { AuthContext } from "./context/auth";
 import Recommend from "./components/Recommend";
 import { useSubscription } from "@apollo/client";
-import { BOOK_ADDED, ALL_BOOKS, ALL_AUTHORS, BOOKS_BY_GENRE } from "./queries";
+import { BOOK_ADDED, ALL_BOOKS } from "./queries";
 
 // function that takes care of manipulating cache
 export const updateCache = (cache, query, addedBook) => {

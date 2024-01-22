@@ -1,0 +1,56 @@
+services:
+  app:
+    image: library-fe-dev
+    build:
+      context: library-frontend/ # The context will pick this directory as the "build context"
+      dockerfile: dev.Dockerfile # This will simply tell which dockerfile to read
+
+    environment:
+      - REACT_APP_SERVER_URI=/api
+      # - WDS_SOCKET_PORT=8080
+      # - REACT_APP_SERVER_WS_URI=/api
+    volumes:
+      - ./library-frontend:/usr/src/app # The path can be relative, so ./ is enough to say "the same location as the docker-compose.yml"
+    container_name: library-fe-dev # This will name the container hello-front-dev
+
+  server:
+    image: library-be-dev
+    build:
+      context: library-backend/
+      dockerfile: dev.Dockerfile
+    ports:
+      - 4000:4000
+    volumes:
+      - ./library-backend/:/app
+    environment:
+      - MONGODB_URI=mongodb://the_username:the_password@mongo:27017/the_database
+      - SECRET=authentication
+    container_name: library-be-dev
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - 3456:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+    volumes:
+      - ./library-backend/models/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - mongo_data:/data/db
+
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - app # wait for the frontend container to be started
+      - server # wait for the backend container to be started
+
+volumes:
+  mongo_data:

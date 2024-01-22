@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Table } from "react-bootstrap";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { BOOKS_BY_GENRE } from "../queries";
 
 const Recommend = (props) => {

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Form, Button } from "react-bootstrap";
 import { AuthContext } from "../context/auth";
-import { Navigate } from "react-router-dom";
 
 const Login = (props) => {
   const { signin } = useContext(AuthContext);

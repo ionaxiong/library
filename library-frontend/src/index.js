@@ -21,10 +21,20 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000",
+  uri: process.env.REACT_APP_SERVER_URI,
+  // uri: "http://localhost:4000",
 });
 
-const wsLink = new GraphQLWsLink(createClient({ url: "ws://localhost:4000" }));
+console.log("-----------", window.location.host);
+console.log("-----------", window.location);
+
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: "ws://localhost:4000",
+    // url: `ws://${window.location.host}/api/`,
+    // process.env.REACT_APP_SERVER_WS_URI
+  })
+);
 
 const splitLink = split(
   ({ query }) => {

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
-import { ADD_BOOK, ALL_BOOKS, ALL_AUTHORS, BOOKS_BY_GENRE, BOOK_ADDED } from "../queries";
+import { ADD_BOOK, ALL_BOOKS } from "../queries";
 import { updateCache } from "../App";
 
 const NewBook = (props) => {
-  const favoriteGenre = props.favoriteGenre;
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [published, setPublished] = useState("");
@@ -20,7 +19,7 @@ const NewBook = (props) => {
     //   // { query: BOOKS_BY_GENRE, variables: { genre: favoriteGenre } },
     // ],
     onError: (error) => {
-      const messages = error.graphQLErrors.map((e) => e.message).join("\n");
+      error.graphQLErrors.map((e) => e.message).join("\n");
       // props.setErrorMessage(messages);
       console.log("error from graphql:", error);
     },
